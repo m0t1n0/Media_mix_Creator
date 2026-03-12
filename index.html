@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>望野🅁🄾🄽🧺 — Media Mix Creator</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"Zen Maru Gothic",sans-serif;background:#fefcfd;color:#3d3650;overflow-x:hidden}
+
+#cv{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:9000;display:flex;justify-content:space-between;align-items:center;padding:18px 32px;background:rgba(254,252,253,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(210,190,220,0.2)}
+.nav-logo{font-weight:700;font-size:0.9rem;color:#3d3650;text-decoration:none;letter-spacing:.02em}
+.hbg{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:8px;margin:-8px}
+.hbg span{display:block;width:20px;height:1.5px;background:#3d3650;border-radius:2px;transition:all .3s ease}
+.hbg.on span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hbg.on span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hbg.on span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* MENU */
+.menu{position:fixed;inset:0;z-index:8000;background:rgba(254,252,253,0.98);backdrop-filter:blur(20px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;opacity:0;visibility:hidden;transition:opacity .4s ease,visibility .4s ease}
+.menu.on{opacity:1;visibility:visible}
+.menu a{font-size:1.45rem;font-weight:400;color:#3d3650;text-decoration:none;padding:12px 56px;letter-spacing:.12em;transition:color .25s;position:relative}
+.menu a::after{content:"";position:absolute;bottom:8px;left:56px;right:56px;height:1px;background:linear-gradient(90deg,#e8a0c0,#90cae8);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.menu a:hover{color:#c47aa0}
+.menu a:hover::after{transform:scaleX(1)}
+
+/* SECTIONS */
+section{position:relative;z-index:1;padding:140px 48px 100px;display:flex;flex-direction:column;justify-content:center;max-width:900px;margin:0 auto}
+section+section{border-top:1px solid rgba(210,190,220,0.25)}
+.slabel{font-family:"Cormorant Garamond",serif;font-size:.68rem;letter-spacing:.35em;color:#c8a0bc;text-transform:uppercase;margin-bottom:14px}
+h2{font-weight:400;font-size:1.55rem;line-height:1.5;letter-spacing:.03em;margin-bottom:32px;color:#3d3650}
+
+/* MAIN */
+#main{min-height:100vh;padding-top:180px}
+.catch{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:1rem;color:#a898b8;margin-bottom:20px;letter-spacing:.06em}
+.title{font-size:clamp(2.4rem,6vw,3.8rem);font-weight:700;line-height:1.15;margin-bottom:24px;letter-spacing:-.01em}
+.title em{font-style:normal;background:linear-gradient(135deg,#dda0c0 0%,#90b8e8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sub{font-size:.97rem;color:#8878a0;line-height:2;max-width:420px;margin-bottom:40px}
+.tags{display:flex;flex-wrap:wrap;gap:7px}
+.tag{font-size:.74rem;padding:5px 13px;border-radius:20px;background:rgba(255,255,255,0.9);border:1px solid rgba(210,190,220,0.4);color:#9888a8;letter-spacing:.02em}
+
+/* ABOUT */
+#about{min-height:auto;padding-top:120px;padding-bottom:100px}
+.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;margin-top:8px}
+.at p{font-size:.92rem;line-height:2.1;color:#5a506a;margin-bottom:18px}
+.at p:last-child{margin-bottom:0}
+.as{border-left:1px solid rgba(210,190,220,0.5);padding-left:32px}
+.si{margin-bottom:22px}
+.si:last-child{margin-bottom:0}
+.sl{font-size:.62rem;letter-spacing:.28em;color:#c8a0bc;text-transform:uppercase;margin-bottom:7px}
+.sv{font-size:.84rem;line-height:1.9;color:#6a607a}
+.sv a{color:#c8a0bc;text-decoration:none;border-bottom:1px solid rgba(200,160,188,0.3);transition:border-color .2s}
+.sv a:hover{border-color:#c8a0bc}
+
+/* DREAM */
+#dream{min-height:auto;padding-top:120px;padding-bottom:100px}
+.dq{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.65;margin:32px 0 36px;padding-left:24px;border-left:2px solid rgba(200,160,188,0.6);color:#4a4060}
+.db p{font-size:.92rem;line-height:2.2;color:#8878a0;max-width:560px;margin-bottom:16px}
+.db p:last-child{margin-bottom:0}
+
+/* PRICE */
+#price{min-height:auto;padding-top:120px;padding-bottom:100px}
+.pnote{font-size:.78rem;color:#a898b8;line-height:2;margin-bottom:44px;padding:16px 20px;background:rgba(255,255,255,0.7);border:1px solid rgba(210,190,220,0.3);border-radius:10px}
+.pcat{margin-bottom:44px}
+.pcat:last-child{margin-bottom:0}
+.pcat-t{font-size:.8rem;font-weight:500;letter-spacing:.15em;color:#b090a8;text-transform:uppercase;padding-bottom:12px;border-bottom:1px solid rgba(210,190,220,0.3);margin-bottom:14px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px}
+.pi{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,0.75);border:1px solid rgba(210,190,220,0.2);border-radius:8px;font-size:.81rem;gap:8px}
+.pi span:first-child{color:#5a506a;min-width:0}
+.pv{color:#c8a0bc;font-weight:500;white-space:nowrap;flex-shrink:0}
+
+/* TOPICS */
+#topics{min-height:auto;padding-top:120px;padding-bottom:100px}
+.tlist{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.ti{padding:18px 22px;background:rgba(255,255,255,0.75);border:1px solid rgba(210,190,220,0.2);border-radius:12px;display:flex;align-items:baseline;gap:24px}
+.td{font-family:"Cormorant Garamond",serif;font-size:.75rem;color:#b0a0c0;white-space:nowrap;flex-shrink:0;letter-spacing:.05em}
+.tt{font-size:.87rem;line-height:1.75;color:#5a506a}
+.ttag{display:inline-block;font-size:.63rem;padding:2px 9px;border-radius:10px;background:rgba(220,170,200,0.12);color:#c8a0bc;margin-bottom:5px;letter-spacing:.04em}
+
+/* CONTACT */
+#contact{min-height:auto;padding-top:120px;padding-bottom:100px}
+.csub{font-size:.88rem;color:#a898b8;line-height:1.9;margin-bottom:28px}
+.clinks{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:9px}
+.cl{display:flex;align-items:center;gap:12px;padding:15px 17px;background:rgba(255,255,255,0.75);border:1px solid rgba(210,190,220,0.2);border-radius:12px;text-decoration:none;color:#3d3650;font-size:.85rem;transition:all .22s ease;cursor:pointer}
+.cl:hover{background:rgba(255,255,255,0.98);border-color:rgba(200,160,188,0.5);transform:translateY(-2px);box-shadow:0 4px 16px rgba(200,160,188,0.12)}
+.ci{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,rgba(252,228,240,0.9),rgba(228,240,255,0.9));display:flex;align-items:center;justify-content:center;font-size:.88rem;flex-shrink:0}
+.cn{font-weight:600;font-size:.84rem;color:#3d3650}
+.cs{font-size:.71rem;color:#a898b8;margin-top:1px}
+
+/* DOWNLOAD / SHOP */
+#download,#shop{min-height:auto;padding-top:120px;padding-bottom:100px}
+.dsub{font-size:.88rem;color:#a898b8;line-height:2;margin-bottom:28px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.card{padding:24px;background:rgba(255,255,255,0.75);border:1px solid rgba(210,190,220,0.2);border-radius:14px;text-decoration:none;color:#3d3650;transition:all .22s ease;display:block}
+.card:hover{background:rgba(255,255,255,0.98);border-color:rgba(160,200,230,0.5);transform:translateY(-3px);box-shadow:0 6px 20px rgba(160,200,230,0.15)}
+.ce{font-size:1.6rem;margin-bottom:12px;display:block}
+.ct{font-size:.93rem;font-weight:700;margin-bottom:6px;color:#3d3650}
+.cd{font-size:.78rem;color:#a898b8;line-height:1.75}
+
+footer{position:relative;z-index:1;text-align:center;padding:40px;border-top:1px solid rgba(210,190,220,0.2);font-size:.72rem;color:#b8a8c8;letter-spacing:.1em;background:rgba(254,252,253,0.6)}
+
+@media(max-width:680px){
+  section{padding:120px 24px 80px}
+  #main{padding-top:150px}
+  .about-grid{grid-template-columns:1fr;gap:36px}
+  .as{border-left:none;border-top:1px solid rgba(210,190,220,0.4);padding-left:0;padding-top:28px}
+  .menu a{font-size:1.2rem;padding:10px 40px}
+  .menu a::after{left:40px;right:40px}
+  h2{font-size:1.35rem}
+}
+</style>
+</head>
+<body>
+
+<canvas id="cv"></canvas>
+
+<nav class="nav">
+  <a href="#main" class="nav-logo">望野🅁🄾🄽🧺</a>
+  <button class="hbg" id="hbg" aria-label="メニュー"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="menu" id="menu">
+  <a href="#main" onclick="cm()">Main</a>
+  <a href="#about" onclick="cm()">About</a>
+  <a href="#dream" onclick="cm()">Dream</a>
+  <a href="#price" onclick="cm()">Price</a>
+  <a href="#topics" onclick="cm()">Topics</a>
+  <a href="#contact" onclick="cm()">Contact</a>
+  <a href="#download" onclick="cm()">Download</a>
+  <a href="#shop" onclick="cm()">Shop</a>
+</div>
+
+<section id="main">
+  <p class="catch">Media Mix Creator</p>
+  <h1 class="title">論より証拠。<br><em>望野🅁🄾🄽</em></h1>
+  <p class="sub">あなたの『望』を叶えます。<br>2D・3D、デジタル・アナログ、<br>手段を選ばず形にします。</p>
+  <div class="tags">
+    <span class="tag">🌸 イラスト</span>
+    <span class="tag">🕊️ 漫画</span>
+    <span class="tag">🎀 デザイン・ロゴ</span>
+    <span class="tag">🪄 Live2D / 3D</span>
+    <span class="tag">🧸 ドールカスタム</span>
+    <span class="tag">🎵 UTAU</span>
+  </div>
+</section>
+
+<section id="about">
+  <p class="slabel">About</p>
+  <h2>望野🅁🄾🄽</h2>
+  <div class="about-grid">
+    <div class="at">
+      <p>多摩美術大学 芸術学科出身。<br>元・商業媒体デジタルコンテンツデザイナー。</p>
+      <p>エディトリアルデザインを起点に、イラスト・漫画・ロゴ・3Dモデルまで幅広く制作。個人制作・同人・配信活動など、さまざまな用途に合わせて丁寧にお応えします。</p>
+      <p>企業様・個人様問わず、商業品質でご対応いたします。</p>
+    </div>
+    <div class="as">
+      <div class="si">
+        <div class="sl">Tools</div>
+        <div class="sv">Adobe CC（Ps / Ai）<br>Affinity Designer<br>VRoid Studio / Live2D Cubism<br>Procreate / コピック等</div>
+      </div>
+      <div class="si">
+        <div class="sl">Environment</div>
+        <div class="sv">MacBook Pro（M4 Pro）<br>iPad Pro</div>
+      </div>
+      <div class="si">
+        <div class="sl">Portfolio</div>
+        <div class="sv"><a href="https://fori.io/m0t1n0" target="_blank">foriio にて公開中</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="dream">
+  <p class="slabel">Dream</p>
+  <h2>クリエイターとしての願い</h2>
+  <blockquote class="dq">2D・3D、デジタル・アナログ。<br>望野はツールを選ばず。</blockquote>
+  <div class="db">
+    <p>イラストでも、漫画でも、ロゴでも、3Dモデルでも。「これ、形にできる？」という問いに、できる限りYESと答えられるクリエイターでいたい。</p>
+    <p>あなたの『望』を叶えるために、挑戦し続けます。</p>
+  </div>
+</section>
+
+<section id="price">
+  <p class="slabel">Price</p>
+  <h2>ご依頼料金表</h2>
+  <div class="pnote">すべて事前ヒアリング必須 / お見積り制　・　リテイク2回まで無料<br>制作内容・衣装の複雑さにより価格が変動する場合があります　・　商業利用・収益化案件は別途ご相談ください</div>
+  <div class="pcat">
+    <div class="pcat-t">🌸 Illustration</div>
+    <div class="pgrid">
+      <div class="pi"><span>お顔のみ</span><span class="pv">3,000円〜</span></div>
+      <div class="pi"><span>胸上</span><span class="pv">12,000円〜</span></div>
+      <div class="pi"><span>腰下</span><span class="pv">20,000円〜</span></div>
+      <div class="pi"><span>全身</span><span class="pv">35,000円〜</span></div>
+      <div class="pi"><span>デフォルメ</span><span class="pv">5,000円〜</span></div>
+      <div class="pi"><span>背景なし立ち絵</span><span class="pv">18,000円〜</span></div>
+      <div class="pi"><span>キャラクターデザイン</span><span class="pv">45,000円〜</span></div>
+      <div class="pi"><span>三面図制作</span><span class="pv">65,000円〜</span></div>
+    </div>
+  </div>
+  <div class="pcat">
+    <div class="pcat-t">🕊️ Manga</div>
+    <div class="pgrid">
+      <div class="pi"><span>四コマ（モノクロ）</span><span class="pv">15,000円〜</span></div>
+      <div class="pi"><span>1ページ（モノクロ）</span><span class="pv">10,000円〜</span></div>
+      <div class="pi"><span>四コマ（フルカラー）</span><span class="pv">30,000円〜</span></div>
+      <div class="pi"><span>1ページ（フルカラー）</span><span class="pv">20,000円〜</span></div>
+      <div class="pi"><span>4〜16ページ（モノクロ）</span><span class="pv">10,000円×P〜</span></div>
+      <div class="pi"><span>4〜16ページ（カラー）</span><span class="pv">20,000円×P〜</span></div>
+      <div class="pi"><span>32ページ以上</span><span class="pv">要相談</span></div>
+    </div>
+  </div>
+  <div class="pcat">
+    <div class="pcat-t">🎀 Design</div>
+    <div class="pgrid">
+      <div class="pi"><span>お名前ロゴ</span><span class="pv">13,000円〜</span></div>
+      <div class="pi"><span>タイトルロゴ</span><span class="pv">25,000円〜</span></div>
+      <div class="pi"><span>コーポレートロゴ</span><span class="pv">50,000円〜</span></div>
+      <div class="pi"><span>サイン制作</span><span class="pv">15,000円〜</span></div>
+      <div class="pi"><span>配信用サムネイル</span><span class="pv">8,000円〜</span></div>
+      <div class="pi"><span>キービジュアル背景</span><span class="pv">20,000円〜</span></div>
+      <div class="pi"><span>同人誌装丁</span><span class="pv">35,000円〜</span></div>
+      <div class="pi"><span>イベントタイトルバナー</span><span class="pv">20,000円〜</span></div>
+    </div>
+  </div>
+  <div class="pcat">
+    <div class="pcat-t">🪄 Live2D / 3D</div>
+    <div class="pgrid">
+      <div class="pi"><span>Live2D用立ち絵（PSD）</span><span class="pv">60,000円〜</span></div>
+      <div class="pi"><span>3Dモデル（VRM）</span><span class="pv">70,000円〜</span></div>
+      <div class="pi"><span>Live2Dモデリング</span><span class="pv">受付中・要相談</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="topics">
+  <p class="slabel">Topics</p>
+  <h2>お知らせ・活動情報</h2>
+  <div class="tlist">
+    <div class="ti">
+      <div class="td">2026.05.06</div>
+      <div class="tt"><span class="ttag">🌸 イベント</span><br>AI生成なんでも展示会（錦糸町）に出展予定です🧺</div>
+    </div>
+    <div class="ti">
+      <div class="td">2026.03</div>
+      <div class="tt"><span class="ttag">🪄 リリース</span><br>365dAIary v2.0.4 公開中です。</div>
+    </div>
+    <div class="ti">
+      <div class="td">随時</div>
+      <div class="tt"><span class="ttag">SNS</span><br>Xにて制作物・活動情報を更新中です。</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <p class="slabel">Contact</p>
+  <h2>ご依頼・お問い合わせ</h2>
+  <p class="csub">ご相談だけでも歓迎です。<br>「これ、形にできる？」という段階でもお気軽にご連絡ください。<br><span style="font-size:.8rem;color:#c8a0bc">企業様からのご連絡はメールにてお願いいたします。</span></p>
+  <div style="margin-bottom:28px;padding:18px 22px;background:rgba(255,255,255,0.75);border:1px solid rgba(210,190,220,0.2);border-radius:12px">
+    <div style="font-size:.62rem;letter-spacing:.28em;color:#c8a0bc;text-transform:uppercase;margin-bottom:12px">得意ジャンル</div>
+    <div style="display:flex;flex-wrap:wrap;gap:7px">
+      <span style="font-size:.76rem;padding:4px 12px;border-radius:16px;background:rgba(232,160,192,0.08);border:1px solid rgba(232,160,192,0.25);color:#a888a8">キャラクターデザイン</span>
+      <span style="font-size:.76rem;padding:4px 12px;border-radius:16px;background:rgba(232,160,192,0.08);border:1px solid rgba(232,160,192,0.25);color:#a888a8">VTuber / 配信者素材</span>
+      <span style="font-size:.76rem;padding:4px 12px;border-radius:16px;background:rgba(232,160,192,0.08);border:1px solid rgba(232,160,192,0.25);color:#a888a8">漫画 / ストーリー制作</span>
+      <span style="font-size:.76rem;padding:4px 12px;border-radius:16px;background:rgba(232,160,192,0.08);border:1px solid rgba(232,160,192,0.25);color:#a888a8">ロゴ / 同人誌デザイン</span>
+      <span style="font-size:.76rem;padding:4px 12px;border-radius:16px;background:rgba(232,160,192,0.08);border:1px solid rgba(232,160,192,0.25);color:#a888a8">3Dモデル / Live2D素材</span>
+      <span style="font-size:.76rem;padding:4px 12px;border-radius:16px;background:rgba(232,160,192,0.08);border:1px solid rgba(232,160,192,0.25);color:#a888a8">ドールカスタム</span>
+    </div>
+  </div>
+  <div class="clinks">
+    <a href="https://twitter.com/m0t1n0" target="_blank" class="cl">
+      <div class="ci">𝕏</div>
+      <div><div class="cn">X（旧Twitter）</div><div class="cs">@m0t1n0</div></div>
+    </a>
+    <div class="cl" onclick="copyMail()">
+      <div class="ci">🌷</div>
+      <div><div class="cn">メールをコピー<span id="mc" style="font-weight:400;font-size:.68rem;color:#c8a0bc;margin-left:6px"></span></div><div class="cs">m0t1n0.o010@gmail.com</div></div>
+    </div>
+    <a href="mailto:m0t1n0.o010@gmail.com" class="cl">
+      <div class="ci">✉️</div>
+      <div><div class="cn">メーラーで開く</div><div class="cs">Gmail / Apple Mail</div></div>
+    </a>
+    <a href="https://coconala.com/users/5865203" target="_blank" class="cl">
+      <div class="ci">🍀</div>
+      <div><div class="cn">ココナラ</div><div class="cs">準備中</div></div>
+    </a>
+    <a href="https://skeb.jp/@m0t1n0" target="_blank" class="cl" style="opacity:.5">
+      <div class="ci">🎨</div>
+      <div><div class="cn">Skeb</div><div class="cs">審査待ち</div></div>
+    </a>
+    <a href="https://fori.io/m0t1n0" target="_blank" class="cl">
+      <div class="ci">🎠</div>
+      <div><div class="cn">foriio</div><div class="cs">ポートフォリオ</div></div>
+    </a>
+  </div>
+</section>
+
+<section id="download">
+  <p class="slabel">Download</p>
+  <h2>制作物・配布</h2>
+  <p class="dsub">別名義にて、AIを活用したツール開発を行っています。<br>AIとの対話でものづくりをする「バイブコーディング」で制作。<br>いずれAI自体の開発を目指すための布石として、日々開発中です。</p>
+  <div class="cgrid">
+    <a href="#" class="card">
+      <span class="ce">🌙</span>
+      <div class="ct">365dAIary</div>
+      <div class="cd">AIとの会話・OC育成アプリ。v2.0.4公開中。</div>
+    </a>
+  </div>
+</section>
+
+<section id="shop">
+  <p class="slabel">Shop</p>
+  <h2>グッズ・販売</h2>
+  <div class="cgrid">
+    <div class="card" style="opacity:.45;cursor:default;pointer-events:none">
+      <span class="ce">🎀</span>
+      <div class="ct">BOOTH</div>
+      <div class="cd">準備中です。もうすぐ開店予定🧺</div>
+    </div>
+    <a href="https://line.me/S/shop/sticker/author/5739368/top" target="_blank" class="card">
+      <span class="ce">🫧</span>
+      <div class="ct">LINEスタンプ</div>
+      <div class="cd">販売中。これからも増えていきます🧺</div>
+    </a>
+  </div>
+</section>
+
+<footer>© 2026 望野🅁🄾🄽🧺 &nbsp;All rights reserved.</footer>
+
+<script>
+// ハンバーガー
+var hbg=document.getElementById("hbg");
+var menu=document.getElementById("menu");
+hbg.addEventListener("click",function(){
+  hbg.classList.toggle("on");
+  menu.classList.toggle("on");
+  document.body.style.overflow=menu.classList.contains("on")?"hidden":"";
+});
+function cm(){
+  hbg.classList.remove("on");
+  menu.classList.remove("on");
+  document.body.style.overflow="";
+}
+
+// メールコピー
+function copyMail(){
+  navigator.clipboard.writeText("m0t1n0.o010@gmail.com").then(function(){
+    var el=document.getElementById("mc");
+    el.textContent="✓ コピー完了";
+    setTimeout(function(){el.textContent="";},2500);
+  }).catch(function(){
+    prompt("コピーしてください:",+"m0t1n0.o010@gmail.com");
+  });
+}
+
+// マーブルオーロラ canvas
+(function(){
+  var cv=document.getElementById("cv");
+  var cx=cv.getContext("2d");
+  var W,H;
+  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+  window.addEventListener("resize",resize);
+  resize();
+
+  var blobs=[
+    {x:.18,y:.22,rx:.52,ry:.42,r:252,g:222,b:238,s:.000016,p:0.0},
+    {x:.82,y:.12,rx:.46,ry:.50,r:224,g:240,b:255,s:.000021,p:1.3},
+    {x:.50,y:.72,rx:.44,ry:.40,r:240,g:224,b:248,s:.000014,p:2.5},
+    {x:.08,y:.60,rx:.40,ry:.46,r:218,g:246,b:252,s:.000019,p:3.8},
+    {x:.78,y:.82,rx:.38,ry:.44,r:250,g:230,b:248,s:.000016,p:0.9},
+    {x:.38,y:.40,rx:.36,ry:.40,r:228,g:244,b:255,s:.000024,p:4.5},
+    {x:.65,y:.30,rx:.30,ry:.34,r:248,g:215,b:235,s:.000018,p:2.0},
+  ];
+
+  var t=0;
+  function draw(){
+    t++;
+    cx.clearRect(0,0,W,H);
+    cx.fillStyle="#fefcfd";
+    cx.fillRect(0,0,W,H);
+
+    var bs=Math.min(W,H);
+    blobs.forEach(function(b){
+      var bx=(b.x+Math.sin(t*b.s+b.p)*0.16)*W;
+      var by=(b.y+Math.cos(t*b.s*0.73+b.p)*0.13)*H;
+      var brx=b.rx*bs*(1+0.11*Math.sin(t*b.s*1.5+b.p));
+      var bry=b.ry*bs*(1+0.09*Math.cos(t*b.s*1.2+b.p));
+      var angle=t*b.s*0.35+b.p;
+
+      cx.save();
+      cx.translate(bx,by);
+      cx.rotate(angle);
+      cx.scale(1,bry/brx);
+
+      var g=cx.createRadialGradient(0,0,0,0,0,brx);
+      g.addColorStop(0,   "rgba("+b.r+","+b.g+","+b.b+",0.48)");
+      g.addColorStop(0.4, "rgba("+b.r+","+b.g+","+b.b+",0.20)");
+      g.addColorStop(0.75,"rgba("+b.r+","+b.g+","+b.b+",0.06)");
+      g.addColorStop(1,   "rgba("+b.r+","+b.g+","+b.b+",0)");
+
+      cx.fillStyle=g;
+      cx.beginPath();
+      cx.arc(0,0,brx,0,Math.PI*2);
+      cx.fill();
+      cx.restore();
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
